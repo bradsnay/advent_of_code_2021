@@ -54,7 +54,7 @@ def find_shortest_path(
     ending_point: Tuple[int, int],
 ):
     """
-        Dijkstra's algorithm w/ priority queue
+    Dijkstra's algorithm w/ priority queue
     """
     while not pqueue.empty():
         weight, u = pqueue.get()
@@ -65,8 +65,8 @@ def find_shortest_path(
         for v in neighbor_indices:
             vx, vy = v
             neighbor_weight = weight + grid[vx][vy]
-            if max(neighbor_weight, known_weights[(ux, uy)]) < known_weights[(vx, vy)]:
-                known_weights[v] = max(neighbor_weight, known_weights[(ux, uy)])
+            if neighbor_weight < known_weights[(vx, vy)]:
+                known_weights[v] = neighbor_weight
                 pqueue.put((neighbor_weight, v))
     return known_weights[ending_point[0] - 1, ending_point[1] - 1]
 
