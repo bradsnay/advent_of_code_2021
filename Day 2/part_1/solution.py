@@ -88,17 +88,17 @@ class CoursePlanner:
     def calculate_final_position(self) -> int:
         current_depth = 0
         current_horizontal_position = 0
-        with open(self.course_file_name, 'r') as file:
+        with open(self.course_file_name, "r") as file:
             for line in file:
                 command_type, magnitude = CoursePlanner.parse_input_line(line)
-                command = CommandFactory.fetch_executable_command(command_type)(magnitude)
-                current_depth, current_horizontal_position = command.run_command(current_depth, current_horizontal_position)
+                command = CommandFactory.fetch_executable_command(command_type)(
+                    magnitude
+                )
+                current_depth, current_horizontal_position = command.run_command(
+                    current_depth, current_horizontal_position
+                )
         return current_depth * current_horizontal_position
 
 
 course_planner = CoursePlanner("input.txt")
 print(course_planner.calculate_final_position())
-
-
-
-

@@ -10,8 +10,8 @@ from time import time
 
 # Stolen from https://github.com/mahakaal/adventofcode/blob/main/2021/day6/day6.py
 def read_file(file_name: str) -> [int]:
-    with open(file_name, 'r') as file:
-        return [int(i) for i in file.read().strip().split(',')]
+    with open(file_name, "r") as file:
+        return [int(i) for i in file.read().strip().split(",")]
 
 
 def part1(data: [int]) -> int:

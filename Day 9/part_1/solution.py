@@ -27,19 +27,19 @@ from typing import List
 def is_low_point(height_map: List[List[int]], x: int, y: int) -> bool:
     current_value = height_map[x][y]
 
-    if y - 1 >= 0 and current_value >= height_map[x][y-1]:
+    if y - 1 >= 0 and current_value >= height_map[x][y - 1]:
         return False
-    if y + 1 < len(height_map[x]) and current_value >= height_map[x][y+1]:
+    if y + 1 < len(height_map[x]) and current_value >= height_map[x][y + 1]:
         return False
-    if x - 1 >= 0 and current_value >= height_map[x-1][y]:
+    if x - 1 >= 0 and current_value >= height_map[x - 1][y]:
         return False
-    if x + 1 < len(height_map) and current_value >= height_map[x+1][y]:
+    if x + 1 < len(height_map) and current_value >= height_map[x + 1][y]:
         return False
 
     return True
 
 
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     height_map = []
     for line in file:
         height_map.append([int(height) for height in line.strip()])

@@ -11,10 +11,10 @@ def is_small_cave(node: str) -> bool:
 
 
 def find_all_paths(
-        graph: Dict[str, Set[str]],
-        start_node: str,
-        end_node: str,
-        path: list,
+    graph: Dict[str, Set[str]],
+    start_node: str,
+    end_node: str,
+    path: list,
 ) -> List[List[str]]:
     # We can only visit a small cave once.
     if is_small_cave(start_node) and start_node in path:
@@ -33,15 +33,16 @@ def find_all_paths(
         paths.extend(new_paths)
     return paths
 
+
 graph = defaultdict(set)
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
-        parsed_line = line.strip().split('-')
+        parsed_line = line.strip().split("-")
         start_node = parsed_line[0]
         end_node = parsed_line[1]
         graph[start_node].add(end_node)
         # Create reverse entry
         graph[end_node].add(start_node)
 
-result = find_all_paths(graph, 'start', 'end', [])
+result = find_all_paths(graph, "start", "end", [])
 print(len(result))

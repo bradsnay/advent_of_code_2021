@@ -27,10 +27,10 @@ from statistics import median
 
 lower_bound = None
 upper_bound = None
-with open("input.txt", 'r') as file:
+with open("input.txt", "r") as file:
     positions = defaultdict(int)
     input_size = 0
-    for position in file.readline().strip().split(','):
+    for position in file.readline().strip().split(","):
         position = int(position)
         positions[position] += 1
         input_size += 1
@@ -45,8 +45,10 @@ position_to_align_at = int(median(positions.keys()))
 for current_position, position_count in positions.items():
     positions_moved = abs(position_to_align_at - current_position)
     fuel_needed += positions_moved * (1 + positions_moved) / 2 * position_count
-print(f"Median solution -> Fuel needed {fuel_needed} Position: {position_to_align_at} Time: {time() - start_time} "
-      f"seconds")
+print(
+    f"Median solution -> Fuel needed {fuel_needed} Position: {position_to_align_at} Time: {time() - start_time} "
+    f"seconds"
+)
 
 start_time = time()
 min_fuel_needed = None
@@ -61,9 +63,7 @@ for position_to_align_at in range(lower_bound, upper_bound):
         min_fuel_needed = fuel_needed
         best_position = position_to_align_at
 
-print(f"Inital solution -> Fuel needed: {min_fuel_needed}, Position: {best_position}, Time: {time() - start_time} "
-      f"seconds")
-
-
-
-
+print(
+    f"Inital solution -> Fuel needed: {min_fuel_needed}, Position: {best_position}, Time: {time() - start_time} "
+    f"seconds"
+)

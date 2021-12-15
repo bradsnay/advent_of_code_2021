@@ -46,7 +46,7 @@ def parse_input_line_int(file_line):
 
 columns = {}
 
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
         value = parse_input_line(line)
         # print(value)

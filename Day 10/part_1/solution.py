@@ -53,21 +53,9 @@ Find the first illegal character in each corrupted line of the navigation subsys
 from typing import Union
 from collections import defaultdict
 
-scoring_map = {
-    ')': 3,
-    ']': 57,
-    '}': 1197,
-    '>': 25137
-}
-valid_start_characters = {
-    '(', '[', '{', '<'
-}
-map_start_character_to_end_character = {
-    '(': ')',
-    '[': ']',
-    '{': '}',
-    '<': '>'
-}
+scoring_map = {")": 3, "]": 57, "}": 1197, ">": 25137}
+valid_start_characters = {"(", "[", "{", "<"}
+map_start_character_to_end_character = {"(": ")", "[": "]", "{": "}", "<": ">"}
 
 
 def find_invalid_syntax(input_line: str) -> Union[str, None]:
@@ -85,7 +73,7 @@ def find_invalid_syntax(input_line: str) -> Union[str, None]:
 
 total_score = 1
 scoring_dict = defaultdict(int)
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
         invalid_character = find_invalid_syntax(line.strip())
         if invalid_character is not None:

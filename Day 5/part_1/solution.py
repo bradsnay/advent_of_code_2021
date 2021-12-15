@@ -42,7 +42,7 @@ from typing import List, Union
 
 
 class Point:
-    def __init__(self, x: Union[str,int], y: Union[str,int]):
+    def __init__(self, x: Union[str, int], y: Union[str, int]):
         self.x = int(x)
         self.y = int(y)
 
@@ -130,7 +130,7 @@ class Grid:
 
     def print_grid(self):
         for y in range(self.max_y + 1):
-            row_string = ''
+            row_string = ""
             for x in range(self.max_x + 1):
                 if y in self.grid and x in self.grid[y]:
                     row_string = f"{row_string} {self.grid[y][x]}"
@@ -139,14 +139,14 @@ class Grid:
             print(row_string)
 
 
-with open('input.txt', 'r') as file:
-    raw_line = file.readline().strip().split('->')
+with open("input.txt", "r") as file:
+    raw_line = file.readline().strip().split("->")
     lines = []
-    while raw_line != ['']:
-        start_point = Point(*raw_line[0].strip().split(','))
-        end_point = Point(*raw_line[1].strip().split(','))
+    while raw_line != [""]:
+        start_point = Point(*raw_line[0].strip().split(","))
+        end_point = Point(*raw_line[1].strip().split(","))
         lines.append(Line(start_point, end_point))
-        raw_line = file.readline().strip().split('->')
+        raw_line = file.readline().strip().split("->")
 
 grid = Grid(lines)
 grid.build_grid()

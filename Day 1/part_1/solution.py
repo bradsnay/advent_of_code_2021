@@ -43,7 +43,7 @@ In this example, there are 7 measurements that are larger than the previous meas
 How many measurements are larger than the previous measurement?
 """
 
-file1 = open('input.txt', 'r')
+file1 = open("input.txt", "r")
 lines = file1.readlines()
 
 last_value = None

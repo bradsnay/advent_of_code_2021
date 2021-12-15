@@ -6,20 +6,32 @@ from typing import List
 from copy import deepcopy
 
 
-def is_point_in_valid_range(x: int, y: int, energy_levels: List[List[int]], flashed_indices_this_step: set) -> bool:
-    return 0 <= x < len(energy_levels) and 0 <= y < len(energy_levels[x]) and not (x, y) in flashed_indices_this_step
+def is_point_in_valid_range(
+    x: int, y: int, energy_levels: List[List[int]], flashed_indices_this_step: set
+) -> bool:
+    return (
+        0 <= x < len(energy_levels)
+        and 0 <= y < len(energy_levels[x])
+        and not (x, y) in flashed_indices_this_step
+    )
 
 
-def increment_adjacent_octopus(x: int, y: int, energy_levels: List[List[int]], flashed_indices_this_step: set):
+def increment_adjacent_octopus(
+    x: int, y: int, energy_levels: List[List[int]], flashed_indices_this_step: set
+):
     for diff_x in [-1, 0, 1]:
         for diff_y in [-1, 0, 1]:
             inc_x = x + diff_x
             inc_y = y + diff_y
-            if is_point_in_valid_range(inc_x, inc_y, energy_levels, flashed_indices_this_step):
+            if is_point_in_valid_range(
+                inc_x, inc_y, energy_levels, flashed_indices_this_step
+            ):
                 energy_levels[inc_x][inc_y] += 1
 
 
-def flash_adjacent_octopus(x: int, y: int, energy_levels: List[List[int]], flashed_indices_this_step: set) -> int:
+def flash_adjacent_octopus(
+    x: int, y: int, energy_levels: List[List[int]], flashed_indices_this_step: set
+) -> int:
     if not is_point_in_valid_range(x, y, energy_levels, flashed_indices_this_step):
         return 0
 
@@ -38,10 +50,7 @@ def flash_adjacent_octopus(x: int, y: int, energy_levels: List[List[int]], flash
     for diff_x in [-1, 0, 1]:
         for diff_y in [-1, 0, 1]:
             flashes_found += flash_adjacent_octopus(
-                x + diff_x,
-                y + diff_y,
-                energy_levels,
-                flashed_indices_this_step
+                x + diff_x, y + diff_y, energy_levels, flashed_indices_this_step
             )
     return flashes_found
 
@@ -57,12 +66,15 @@ def simulate_one_step(energy_levels: List[List[int]]) -> int:
     num_flashes = 0
     for x in range(len(energy_levels)):
         for y in range(len(energy_levels[x])):
-            num_flashes += flash_adjacent_octopus(x, y, energy_levels, flashed_indices_this_step)
+            num_flashes += flash_adjacent_octopus(
+                x, y, energy_levels, flashed_indices_this_step
+            )
     return num_flashes
+
 
 energy_levels = []
 total_octopi = 0
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
         levels = [int(level) for level in line.strip()]
         total_octopi += len(levels)

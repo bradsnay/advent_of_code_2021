@@ -75,26 +75,30 @@ def value_to_remove_co2_scrubber(zero_count: int, one_count: int):
     return 0 if one_count < zero_count else 1
 
 
-def apply_bit_criteria_helper(binary_values: set, bit_index: int, bit_criteria_fn: callable) -> str:
+def apply_bit_criteria_helper(
+    binary_values: set, bit_index: int, bit_criteria_fn: callable
+) -> str:
     if len(binary_values) == 1:
         return list(binary_values)[0]
-    column_value_counts, column_value_values = count_column_values(binary_values, bit_index)
+    column_value_counts, column_value_values = count_column_values(
+        binary_values, bit_index
+    )
     bit_counts = column_value_counts[bit_index]
     values_to_remove_at_index = bit_criteria_fn(bit_counts[0], bit_counts[1])
 
     return apply_bit_criteria_helper(
         binary_values - column_value_values[bit_index][values_to_remove_at_index],
         bit_index + 1,
-        bit_criteria_fn
+        bit_criteria_fn,
     )
 
 
-def apply_bit_criteria(binary_values: set,  bit_criteria_fn: callable) -> str:
+def apply_bit_criteria(binary_values: set, bit_criteria_fn: callable) -> str:
     return apply_bit_criteria_helper(binary_values, 0, bit_criteria_fn)
 
 
 file_input = set()
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
         file_input.add(line.strip())
 
@@ -107,4 +111,3 @@ print(oxygen_rating)
 print(co2_rating)
 print(int(oxygen_rating, 2))
 print(int(co2_rating, 2))
-

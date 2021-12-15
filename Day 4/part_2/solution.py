@@ -26,7 +26,9 @@ class BoardSpace:
 class Board:
     def __init__(self):
         self.board: Dict[str, BoardSpace] = {}
-        self.raw_board: List[List[str]] = []  # Just used for printing state, not calculations.
+        self.raw_board: List[
+            List[str]
+        ] = []  # Just used for printing state, not calculations.
         self.count_marked_spaces_rows = defaultdict(int)
         self.count_marked_spaces_columns = defaultdict(int)
         self.sum_unmarked_numbers = 0
@@ -50,14 +52,20 @@ class Board:
         self.count_marked_spaces_rows[board_space.row] += 1
         self.count_marked_spaces_columns[board_space.column] += 1
 
-        self.did_win = self.count_marked_spaces_rows[board_space.row] == 5 or self.count_marked_spaces_columns[
-            board_space.column] == 5
+        self.did_win = (
+            self.count_marked_spaces_rows[board_space.row] == 5
+            or self.count_marked_spaces_columns[board_space.column] == 5
+        )
 
     def print_board_state(self):
         for row in self.raw_board:
             row_str = ""
             for number in row:
-                row_str = f"{row_str} ({number})" if self.board[number].marked is True else f"{row_str} {number}"
+                row_str = (
+                    f"{row_str} ({number})"
+                    if self.board[number].marked is True
+                    else f"{row_str} {number}"
+                )
             print(row_str)
         print()
 
@@ -73,7 +81,9 @@ def play_bingo(boards: List[Board], numbers_drawn: List[str]) -> Tuple[int, Boar
             board = boards[board_index]
             board.mark_space(drawing_number)
             if board.did_win is True:
-                boards_won.append((board.sum_unmarked_numbers * int(drawing_number), board))
+                boards_won.append(
+                    (board.sum_unmarked_numbers * int(drawing_number), board)
+                )
                 board_indices_won.add(board_index)
             # The last board has won.
             if len(boards_won) == len(boards):
@@ -96,8 +106,8 @@ def read_next_board(file) -> Union[Board, None]:
 
 
 def read_input_file(file_name: str):
-    with open(file_name, 'r') as file:
-        bingo_numbers = file.readline().strip().split(',')
+    with open(file_name, "r") as file:
+        bingo_numbers = file.readline().strip().split(",")
         boards = []
 
         board = read_next_board(file)
@@ -107,7 +117,7 @@ def read_input_file(file_name: str):
     return boards, bingo_numbers
 
 
-score, winning_board = play_bingo(*read_input_file('input.txt'))
+score, winning_board = play_bingo(*read_input_file("input.txt"))
 if winning_board is not None:
     print("We have a winner!")
     print("Score ", score)

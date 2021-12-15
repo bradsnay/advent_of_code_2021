@@ -53,7 +53,7 @@ def fetch_sliding_window_sum(depths_list: list, start_index: int, window_size: i
     return window_sum
 
 
-file1 = open('input.txt', 'r')
+file1 = open("input.txt", "r")
 lines = file1.readlines()
 
 last_value = None

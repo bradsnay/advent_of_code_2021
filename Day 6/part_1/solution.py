@@ -78,8 +78,11 @@ class LanternFish:
         self.internal_timer = 6
 
 
-with open('test_input.txt', 'r') as file:
-    lantern_fishes = [LanternFish(int(init_timer)) for init_timer in file.readline().strip().split(',')]
+with open("test_input.txt", "r") as file:
+    lantern_fishes = [
+        LanternFish(int(init_timer))
+        for init_timer in file.readline().strip().split(",")
+    ]
 
 num_days_to_simulate = 256
 for day in range(0, num_days_to_simulate):

@@ -6,12 +6,7 @@ https://adventofcode.com/2021/day/8
 
 from typing import List
 
-len_to_digits = {
-    2: 1,
-    4: 4,
-    3: 7,
-    7: 8
-}
+len_to_digits = {2: 1, 4: 4, 3: 7, 7: 8}
 
 
 def determine_signal_mapping(input_values: List[str]):
@@ -30,11 +25,15 @@ def determine_signal_mapping(input_values: List[str]):
         value_len = len(value)
         if value_len == 6:  # 0,6,9
             # Find 9. The union of 1, 4, and 7 is a subset of 9.
-            if (digit_to_input[1] | digit_to_input[4] | digit_to_input[7]).issubset(value):
+            if (digit_to_input[1] | digit_to_input[4] | digit_to_input[7]).issubset(
+                value
+            ):
                 digit_to_input[9] = value
             # Find 0. The union of 1 and 7 is a subset of 0 so long as 4 is not also a subset because of the middle
             # segment.
-            elif (digit_to_input[1] | digit_to_input[7]).issubset(value) and not digit_to_input[4].issubset(value):
+            elif (digit_to_input[1] | digit_to_input[7]).issubset(
+                value
+            ) and not digit_to_input[4].issubset(value):
                 digit_to_input[0] = value
             # Only option left is 6 for a string length of 6
             else:
@@ -54,10 +53,10 @@ def determine_signal_mapping(input_values: List[str]):
     return digit_to_input
 
 
-with open('test_input_2.txt', 'r') as file:
+with open("test_input_2.txt", "r") as file:
     final_output = 0
     for line in file:
-        parsed_line = line.strip().split('|')
+        parsed_line = line.strip().split("|")
         signal_mapping = determine_signal_mapping(parsed_line[0].split())
         sorted_input_value_to_digit = {}
         for digit, input_value in signal_mapping.items():
@@ -65,6 +64,8 @@ with open('test_input_2.txt', 'r') as file:
 
         output = ""
         for output_value in parsed_line[1].split():
-            output = f'{output}{sorted_input_value_to_digit["".join(sorted(output_value))]}'
+            output = (
+                f'{output}{sorted_input_value_to_digit["".join(sorted(output_value))]}'
+            )
         final_output += int(output)
 print(final_output)

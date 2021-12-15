@@ -52,12 +52,16 @@ def find_basin_size(height_map: List[List[int]], x: int, y: int) -> int:
     if value == 9:
         return 0
     height_map[x][y] = 9
-    x_basin = find_basin_size(height_map, x + 1, y) + find_basin_size(height_map, x - 1, y)
-    y_basin = find_basin_size(height_map, x, y + 1) + find_basin_size(height_map, x, y - 1)
+    x_basin = find_basin_size(height_map, x + 1, y) + find_basin_size(
+        height_map, x - 1, y
+    )
+    y_basin = find_basin_size(height_map, x, y + 1) + find_basin_size(
+        height_map, x, y - 1
+    )
     return 1 + x_basin + y_basin
 
 
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     height_map = []
     for line in file:
         height_map.append([int(height) for height in line.strip()])

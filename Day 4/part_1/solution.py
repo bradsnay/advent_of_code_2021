@@ -81,8 +81,10 @@ class Board:
         self.count_marked_spaces_rows[board_space.row] += 1
         self.count_marked_spaces_columns[board_space.column] += 1
 
-        self.board_won = self.count_marked_spaces_rows[board_space.row] == 5 or self.count_marked_spaces_columns[
-            board_space.column] == 5
+        self.board_won = (
+            self.count_marked_spaces_rows[board_space.row] == 5
+            or self.count_marked_spaces_columns[board_space.column] == 5
+        )
 
     def print_board_state(self):
         for row in self.raw_board:
@@ -123,8 +125,8 @@ def play_bingo(boards: List[Board], numbers_drawn: List[str]) -> Tuple[int, Boar
         count_of_numbers_drawn += 1
 
 
-with open('input.txt', 'r') as file:
-    bingo_numbers = file.readline().strip().split(',')
+with open("input.txt", "r") as file:
+    bingo_numbers = file.readline().strip().split(",")
     boards = []
 
     board = read_next_board(file)

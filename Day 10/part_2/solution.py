@@ -39,21 +39,9 @@ Find the completion string for each incomplete line, score the completion string
 """
 from statistics import median
 
-scoring_map = {
-    ')': 1,
-    ']': 2,
-    '}': 3,
-    '>': 4
-}
-valid_start_characters = {
-    '(', '[', '{', '<'
-}
-start_character_to_end_character_map = {
-    '(': ')',
-    '[': ']',
-    '{': '}',
-    '<': '>'
-}
+scoring_map = {")": 1, "]": 2, "}": 3, ">": 4}
+valid_start_characters = {"(", "[", "{", "<"}
+start_character_to_end_character_map = {"(": ")", "[": "]", "{": "}", "<": ">"}
 
 
 def complete_incomplete_line(input_line: str) -> int:
@@ -71,12 +59,14 @@ def complete_incomplete_line(input_line: str) -> int:
 
     # We made it to the end. Lets figure out how to fix the line.
     while len(stack) > 0:
-        total_score = (total_score * 5) + scoring_map[start_character_to_end_character_map[stack.pop()]]
+        total_score = (total_score * 5) + scoring_map[
+            start_character_to_end_character_map[stack.pop()]
+        ]
     return total_score
 
 
 scores = []
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
         score = complete_incomplete_line(line.strip())
         # Score of zero means the line is corrupt so ignore it.

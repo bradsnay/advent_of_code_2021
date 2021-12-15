@@ -11,17 +11,17 @@ def is_small_cave(node: str) -> bool:
 
 
 def find_all_paths(
-        graph: Dict[str, Set[str]],
-        start_node: str,
-        end_node: str,
-        path: list,
-        node_being_explored_twice=None
+    graph: Dict[str, Set[str]],
+    start_node: str,
+    end_node: str,
+    path: list,
+    node_being_explored_twice=None,
 ) -> List[List[str]]:
     # We've reached the end. Return the path with the end node tacked on.
     if start_node == end_node:
         return [path + [end_node]]
     # Only visit start node once.
-    if start_node == 'start' and start_node in path:
+    if start_node == "start" and start_node in path:
         return []
     # Don't traverse a sub-path where the start node is the one we've already visited twice.
     if start_node == node_being_explored_twice:
@@ -40,19 +40,21 @@ def find_all_paths(
     paths = []
     for node in graph[start_node]:
         # Find all remaining paths starting at a child node of start_node.
-        new_paths = find_all_paths(graph, node, end_node, path + [start_node], node_being_explored_twice)
+        new_paths = find_all_paths(
+            graph, node, end_node, path + [start_node], node_being_explored_twice
+        )
         paths.extend(new_paths)
     return paths
 
 
 graph = defaultdict(set)
-with open('input.txt', 'r') as file:
+with open("input.txt", "r") as file:
     for line in file:
-        parsed_line = line.strip().split('-')
+        parsed_line = line.strip().split("-")
         start_node = parsed_line[0]
         end_node = parsed_line[1]
         graph[start_node].add(end_node)
         graph[end_node].add(start_node)
 
-result = find_all_paths(graph, 'start', 'end', [])
+result = find_all_paths(graph, "start", "end", [])
 print(len(result))

@@ -32,8 +32,8 @@ This costs a total of 37 fuel. This is the cheapest possible outcome; more expen
 Determine the horizontal position that the crabs can align to using the least fuel possible. How much fuel must they spend to align to that position?
 """
 
-with open("input.txt", 'r') as file:
-    positions = [int(position) for position in file.readline().strip().split(',')]
+with open("input.txt", "r") as file:
+    positions = [int(position) for position in file.readline().strip().split(",")]
 
 min_fuel_needed = None
 best_position = None
@@ -46,7 +46,3 @@ for position_to_align_at in positions:
         best_position = position_to_align_at
 
 print(f"Fuel needed: {min_fuel_needed}, Position: {best_position}")
-
-
-
-
