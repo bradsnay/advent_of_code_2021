@@ -95,7 +95,7 @@ class OperatorValuePacket(Packet, ABC):
         if self.length_type_id == self.LENGTH_TYPE_BIT:
             return self.parse_bit_length_type()
         if self.length_type_id == self.LENGTH_TYPE_SUBPACKET_COUNT:
-            return self.parse_packet_length_type()
+            return self.parse_packet_count_type()
         raise Exception(f"Invalid length type id: {self.length_type_id}")
 
     def parse_bit_length_type(self) -> int:
@@ -123,7 +123,7 @@ class OperatorValuePacket(Packet, ABC):
         # Apply this packets operator on the results.
         return self.operation(results)
 
-    def parse_packet_length_type(self) -> int:
+    def parse_packet_count_type(self) -> int:
         # Parse out the binary value representing how many sub packets are in this packet.
         num_sub_packets = int(
             self.binary_input[
