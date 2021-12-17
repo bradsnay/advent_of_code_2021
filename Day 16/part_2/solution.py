@@ -89,7 +89,7 @@ class OperatorValuePacket(Packet, ABC):
     def __init__(self, packet_header: PacketHeader, binary_input: str):
         super().__init__(packet_header, binary_input)
         self.length_type_id = int(binary_input[self.bit_len], 2)
-        self.bit_len = self.BIT_LENGTH_TYPE_END_INDEX
+        self.bit_len = self.LENGTH_TYPE_INDEX
 
     def parse(self) -> int:
         if self.length_type_id == self.LENGTH_TYPE_BIT:
@@ -99,44 +99,57 @@ class OperatorValuePacket(Packet, ABC):
         raise Exception(f"Invalid length type id: {self.length_type_id}")
 
     def parse_bit_length_type(self) -> int:
-        bit_length = int(
+        # Parse out the binary value representing how many bits are left in this packet.
+        remaining_bit_length = int(
             self.binary_input[self.LENGTH_TYPE_INDEX : self.BIT_LENGTH_TYPE_END_INDEX],
             2,
         )
+        # Now we know our total bit length for this packet.
+        self.bit_len = self.BIT_LENGTH_TYPE_END_INDEX + remaining_bit_length
 
-        self.bit_len += bit_length
+        # Get the rest of the packet less the header/length info.
         remaining_input = self.binary_input[
             self.BIT_LENGTH_TYPE_END_INDEX : self.bit_len
         ]
 
         results = []
         while len(remaining_input) != 0:
+            # Get the first sub-packet.
             sub_packet = PacketFactory.fetch_packet_type(remaining_input)
+            # Parse it, this will also parse the sub-packets of the sub-packet.
             results.append(sub_packet.parse())
+            # Figure out what we have left to parse out now that we know the bit length of the sub-packet.
             remaining_input = remaining_input[sub_packet.bit_len :]
+        # Apply this packets operator on the results.
         return self.operation(results)
 
     def parse_packet_length_type(self) -> int:
+        # Parse out the binary value representing how many sub packets are in this packet.
         num_sub_packets = int(
             self.binary_input[
                 self.LENGTH_TYPE_INDEX : self.PACKET_COUNT_TYPE_END_INDEX
             ],
             2,
         )
-
+        # We know our bit length is AT LEAST the header plus the packet count value.
         self.bit_len = self.PACKET_COUNT_TYPE_END_INDEX
+
+        # Remove the header and packet count value and parse sub-packets.
         remaining_input = self.binary_input[self.PACKET_COUNT_TYPE_END_INDEX :]
 
         sub_packets_parsed = 0
         results = []
         while sub_packets_parsed < num_sub_packets:
+            # Get the first sub-packet.
             sub_packet = PacketFactory.fetch_packet_type(remaining_input)
+            # Parse it, this will also parse the sub-packets of the sub-packet.
             results.append(sub_packet.parse())
-
+            # Figure out what we have left to parse out now that we know the bit length of the sub-packet.
             remaining_input = remaining_input[sub_packet.bit_len :]
+            # Now that we know the sub-packet length, add it to the total length of this packet.
             self.bit_len += sub_packet.bit_len
             sub_packets_parsed += 1
-
+        # Apply this packets operator on the results.
         return self.operation(results)
 
     @abstractmethod
